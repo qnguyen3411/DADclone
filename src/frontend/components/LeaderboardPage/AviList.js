@@ -5,7 +5,7 @@ import {GalleryLink} from '../GalleryLink';
 export default ({ users }) => {
   return (
     users.map((user, index) => (
-      <GalleryLink user={user}>
+      <GalleryLink userId={user.id}>
         <img
           key={index}
           width={30}

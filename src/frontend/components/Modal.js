@@ -9,47 +9,74 @@ import RegisterForm from './Forms/RegisterForm';
 
 import { hideModal } from '../actions/AppActions';
 
-class ModalExample extends React.Component {
+// class ModalExample extends React.Component {
 
-  resolveChildComponent(constant) {
-    const { onToggle } = this.props;
+//   resolveChildComponent(constant) {
+//     const { onToggle } = this.props;
 
-    switch (constant) {
-      case modalComponent.SUBMISSION_FORM:
-        return (<SubmissionForm onClose={onToggle} />);
-      case modalComponent.LOGIN_FORM:
-        return (<LoginForm onClose={onToggle} />);
-      case modalComponent.REGISTER_FORM:
-        return (<RegisterForm onClose={onToggle} />)
-      default:
-        return (<div />)
-    }
+//     switch (constant) {
+//       case modalComponent.SUBMISSION_FORM:
+//         return (<SubmissionForm onClose={onToggle} />);
+//       case modalComponent.LOGIN_FORM:
+//         return (<LoginForm onClose={onToggle} />);
+//       case modalComponent.REGISTER_FORM:
+//         return (<RegisterForm onClose={onToggle} />)
+//       default:
+//         return (<div />)
+//     }
+//   }
+
+//   render() {
+//     const { isOpen, child, onToggle } = this.props;
+//     const childComponent = this.resolveChildComponent(child);
+//     return (
+//       <Modal isOpen={isOpen} toggle={onToggle} className={this.props.className}>
+//         <ModalHeader toggle={onToggle}>Modal title</ModalHeader>
+//         <ModalBody>
+//           {childComponent}
+//         </ModalBody>
+//         <ModalFooter>
+//           <Button color="secondary" onClick={onToggle}>Cancel</Button>
+//         </ModalFooter>
+//       </Modal>
+//     );
+//   }
+// }
+
+const ModalForm = ({formKey, onClose}) => {
+  switch (formKey) {
+    case modalComponent.SUBMISSION_FORM:
+      return (<SubmissionForm onClose={onClose} />);
+    case modalComponent.LOGIN_FORM:
+      return (<LoginForm onClose={onClose} />);
+    case modalComponent.REGISTER_FORM:
+      return (<RegisterForm onClose={onClose} />)
+    default:
+      return (<div />)
   }
+}
 
-  render() {
-    const { isOpen, child, onToggle } = this.props;
-    const childComponent = this.resolveChildComponent(child);
-    return (
-      <Modal isOpen={isOpen} toggle={onToggle} className={this.props.className}>
-        <ModalHeader toggle={onToggle}>Modal title</ModalHeader>
-        <ModalBody>
-          {childComponent}
-        </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={onToggle}>Cancel</Button>
-        </ModalFooter>
-      </Modal>
-    );
-  }
+export const MyModal = ({ isOpen, formKey, onToggle }) => {
+  return (
+    <Modal isOpen={isOpen} toggle={onToggle}>
+      <ModalHeader toggle={onToggle}>Modal title</ModalHeader>
+      <ModalBody>
+        <ModalForm formKey={formKey} onToggle={onToggle} />
+      </ModalBody>
+      <ModalFooter>
+        <Button color="secondary" onClick={onToggle}>Cancel</Button>
+      </ModalFooter>
+    </Modal>
+  );
 }
 
 const mapStateToProps = (state) => ({
   isOpen: state.app.showingModal,
-  child: state.app.modalComponent
+  formKey: state.app.modalComponent
 })
 
 const mapDispatchToProps = (dispatch) => ({
   onToggle: () => dispatch(hideModal())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalExample);
+export default connect(mapStateToProps, mapDispatchToProps)(MyModal);

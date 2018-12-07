@@ -1,13 +1,12 @@
 import React from 'react';
-import moment from 'moment';
 import { NavLink as RouterNavLink } from 'react-router-dom';
 import {  Pagination, PaginationItem, PaginationLink } from 'reactstrap';
-import { DATE_FORMAT } from '../../constants/App';
 
+import { getNextDateStr, getPrevDateStr} from '../../helpers';
 
 const DateControl = ({ date, onDateChange }) => {
-  const prevDate = moment(date).subtract(1, 'd').format(DATE_FORMAT);
-  const nextDate = moment(date).add(1, 'd').format(DATE_FORMAT);
+  const prevDate = getPrevDateStr(date);
+  const nextDate = getNextDateStr(date);
   const yesterdayGallery = `/gallery/${prevDate}`;
   const tomorrowGallery =  `/gallery/${nextDate}`;
   const linkClassName = 'text-dark border border-dark';

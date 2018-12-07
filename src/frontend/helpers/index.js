@@ -3,6 +3,8 @@ import { DATE_FORMAT, REFETCH_TIME } from '../constants/App';
 
 
 export const getTodaysDateStr = () => moment().format(DATE_FORMAT);
+export const getNextDateStr = (date) => moment(date).add(1, 'd').format(DATE_FORMAT);
+export const getPrevDateStr = (date) => moment(date).subtract(1, 'd').format(DATE_FORMAT);
 
 export const needsRefetch = (lastFetched) => {
   const refetchTime = moment(lastFetched).add(REFETCH_TIME);
@@ -18,3 +20,5 @@ export const paginateItems = (items, {offset, limit}) => {
 }
 
 export const pipe = (...ops) => ops.reduce((a, b) => (arg) => b(a(arg)))
+
+export const xor = (a,b) => ( a || b ) && !( a && b );
